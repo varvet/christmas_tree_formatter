@@ -1,0 +1,4 @@
+--require spec_helper
+--require christmas_tree_formatter
+--format ChristmasTreeFormatter
+--color
