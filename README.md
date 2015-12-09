@@ -29,6 +29,17 @@ Add to `.rspec`:
 --format ChristmasTreeFormatter
 ```
 
+If you only want to use the `christmas_tree_formatter`
+during the month of December,
+you can wrap that in an ERB conditional:
+
+```
+<% if Date.today.month == 12 %>
+  --require christmas_tree_formatter
+  --format ChristmasTreeFormatter
+<% end %>
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
