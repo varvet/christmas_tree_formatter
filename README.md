@@ -2,6 +2,8 @@
 
 Christmas tree formatter for RSpec.
 
+![Example](./example.gif?raw=true)
+
 ## Installation
 
 Add this line to your application's Gemfile:
