@@ -21,15 +21,15 @@ class ChristmasTreeFormatter < RSpec::Core::Formatters::BaseTextFormatter
   end
 
   def example_passed(_notification)
-    @tree.print "•", color: :green
+    @tree.print "•", :green
   end
 
   def example_pending(_notification)
-    @tree.print "•", color: :yellow, blink: true
+    @tree.print "•", :yellow, :blink
   end
 
   def example_failed(_notification)
-    @tree.print "•", color: :red
+    @tree.print "•", :red
   end
 
   def stop(_notification)

@@ -26,30 +26,33 @@ class ChristmasTreeFormatter::ChristmasTree
   attr_reader :column
   attr_reader :row
 
-  def print(symbol, color: :green, blink: false)
-    if @row == 0 and @column == 0
+  def print(symbol, *escapes)
+    if @column == 0 and @column != start_column_for_row
       @column = start_column_for_row
-      @output.print(" " * @column)
+      @output.print " " * @column
     end
 
-    symbol = escape(symbol, :blink) if blink
-    @output.print escape(symbol, color)
+    escaped_symbol = escapes.reduce(symbol) do |symbol, code|
+      escape(symbol, code)
+    end
+
+    @output.print escaped_symbol
     @column += 1
 
     if @column >= end_column_for_row
       @row += 1
       @output.print "\n"
-
-      @column = start_column_for_row
-      @output.print " " * @column
+      @column = 0
     end
   end
 
   def finalize
-    print "•", color: :white until @column == start_column_for_row
+    print "•", :white until @column == start_column_for_row
 
-    @output.print " " * ((end_column_for_row - @column) / 2)
-    @output.print escape("H", :brown)
+    @column = ((end_column_for_row - @column) / 2)
+    @output.print " " * @column
+
+    print "H", :brown
   end
 
   private
@@ -64,7 +67,7 @@ class ChristmasTreeFormatter::ChristmasTree
   end
 
   def escape(message, code)
-    code = VT100_CODES[code] || code
+    code = VT100_CODES.fetch(code) if code.is_a?(Symbol)
     "\e[#{code}m#{message}\e[0m"
   end
 end
