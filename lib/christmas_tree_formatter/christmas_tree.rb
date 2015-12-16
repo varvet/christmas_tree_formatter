@@ -46,6 +46,10 @@ class ChristmasTreeFormatter::ChristmasTree
     end
   end
 
+  def star
+    print '⭒', :yellow, :blink
+  end
+
   def finalize
     print "•", :white until @column == start_column_for_row
 

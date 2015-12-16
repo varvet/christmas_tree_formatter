@@ -18,6 +18,7 @@ class ChristmasTreeFormatter < RSpec::Core::Formatters::BaseTextFormatter
     @width += 2 until (((@width / 2) * @width) / 2) >= @example_count || @width >= max_width
 
     @tree = ChristmasTree.new(@width, output: output)
+    @tree.star
   end
 
   def example_passed(_notification)
