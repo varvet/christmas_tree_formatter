@@ -42,7 +42,7 @@ class ChristmasTreeFormatter::ChristmasTree
     print '⭒', :yellow, :blink
   end
 
-  def snow(column = @column, position)
+  def snow(column, position)
     parity = position == :before ? (@row + 1) % 2 : 1
 
     output_string = (' ' * column).split('').map.with_index do |symbol, index|
