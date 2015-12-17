@@ -2,7 +2,7 @@
 
 Christmas tree formatter for RSpec.
 
-![Example](./example.gif?raw=true)
+![Example](./tree.png?raw=true)
 
 ## Installation
 
