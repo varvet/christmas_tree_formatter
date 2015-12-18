@@ -28,22 +28,11 @@ class ChristmasTreeFormatter::ChristmasTree
 
   def print(symbol, *escapes)
     if @column == 0 and @column != start_column_for_row
-      @column = start_column_for_row
-      @output.print " " * @column
+      output " " until @column == start_column_for_row
     end
 
-    escaped_symbol = escapes.reduce(symbol) do |symbol, code|
-      escape(symbol, code)
-    end
-
-    @output.print escaped_symbol
-    @column += 1
-
-    if @column >= end_column_for_row
-      @row += 1
-      @output.print "\n"
-      @column = 0
-    end
+    output escape(symbol, *escapes)
+    output "\n" if @column >= end_column_for_row
   end
 
   def star
@@ -53,13 +42,23 @@ class ChristmasTreeFormatter::ChristmasTree
   def finalize
     print "•", :white until @column == start_column_for_row
 
-    @column = ((end_column_for_row - @column) / 2)
-    @output.print " " * @column
-
-    print "H", :brown
+    center = ((end_column_for_row - @column) / 2)
+    output " " until @column == center
+    output escape("H", :brown)
   end
 
   private
+
+  def output(character)
+    if character["\n"]
+      @output.print character
+      @row += 1
+      @column = 0
+    else
+      @output.print character
+      @column += 1
+    end
+  end
 
   def start_column_for_row
     [@width/2 - @row, 0].max
@@ -70,8 +69,10 @@ class ChristmasTreeFormatter::ChristmasTree
     [@width/2 + @row + middle, @width].min
   end
 
-  def escape(message, code)
-    code = VT100_CODES.fetch(code) if code.is_a?(Symbol)
-    "\e[#{code}m#{message}\e[0m"
+  def escape(message, *codes)
+    codes.reduce(message) do |message, code|
+      code = VT100_CODES.fetch(code) if code.is_a?(Symbol)
+      "\e[#{code}m#{message}\e[0m"
+    end
   end
 end
