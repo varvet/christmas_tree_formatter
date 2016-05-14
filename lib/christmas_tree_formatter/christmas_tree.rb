@@ -28,14 +28,15 @@ class ChristmasTreeFormatter::ChristmasTree
 
   def print(symbol, *escapes)
     if @column == 0 and @column != start_column_for_row
-      output snow(@column, :before) until @column == start_column_for_row
+      @column = start_column_for_row
+      snow(@column, :before)
     end
 
     output escape(symbol, *escapes)
     if @column >= end_column_for_row
       snow(start_column_for_row, :after)
       output "\n"
-    end 
+    end
   end
 
   def star
