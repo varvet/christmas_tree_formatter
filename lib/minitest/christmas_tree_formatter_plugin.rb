@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require "christmas_tree_formatter/christmas_tree"
 
 module Minitest

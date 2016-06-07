@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class ChristmasTreeFormatter::ChristmasTree
   VT100_CODES = {
     black:   "30",
