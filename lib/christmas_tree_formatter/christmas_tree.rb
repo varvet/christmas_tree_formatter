@@ -30,15 +30,29 @@ class ChristmasTreeFormatter::ChristmasTree
 
   def print(symbol, *escapes)
     if @column == 0 and @column != start_column_for_row
-      output " " until @column == start_column_for_row
+      @column = start_column_for_row
+      snow(@column, :before)
     end
 
     output escape(symbol, *escapes)
-    output "\n" if @column >= end_column_for_row
+    if @column >= end_column_for_row
+      snow(start_column_for_row, :after)
+      output "\n"
+    end
   end
 
   def star
     print '⭒', :yellow, :blink
+  end
+
+  def snow(column, position)
+    parity = position == :before ? (@row + 1) % 2 : 1
+
+    output_string = (' ' * column).split('').map.with_index do |symbol, index|
+      index % 2 == parity ? escape('*', :white) : symbol
+    end
+
+    @output.print output_string.join
   end
 
   def finalize
